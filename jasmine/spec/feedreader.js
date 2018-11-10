@@ -33,7 +33,7 @@ $(function() {
 		 */
 		it('it has to be a URL defined', function() {
 			allFeeds.forEach(function(feedItem) {
-				expect(feedItem.url).toBeDefined();
+				expect(feedItem.url).toBeTruthy();
 			})
 		});
 
@@ -44,7 +44,7 @@ $(function() {
 		 */
 		it('it has to be a NAME defined', function() {
 			allFeeds.forEach(function(feedItem) {
-				expect(feedItem.name).toBeDefined();
+				expect(feedItem.name).toBeTruthy();
 			})
 		});
 	});
@@ -72,12 +72,22 @@ $(function() {
 
 		it('Should menu show when it is clicked and hidden when it is clicked again', function() {
 			var menu = document.querySelector('.menu-icon-link');
+			var menuHidden = document.querySelector('.menu-hidden');
 
-			menu.click();
-			expect(document.querySelector('.menu-hidden')).toBe(null);
+			if (menuHidden) {
+				menu.click();
+				expect(document.querySelector('.menu-hidden')).toBe(null);
 
-			menu.click();
-			expect(document.querySelector('.menu-hidden')).not.toBe(null);
+				menu.click();
+				expect(document.querySelector('.menu-hidden')).not.toBe(null);
+			}
+			else {
+				menu.click();
+				expect(document.querySelector('.menu-hidden')).not.toBe(null);
+
+				menu.click();
+				expect(document.querySelector('.menu-hidden')).toBe(null);
+			}
 		});
 
 	});
@@ -92,14 +102,15 @@ $(function() {
 		 * the use of Jasmine's beforeEach and asynchronous done() function.
 		 */
 		beforeEach(function(done) {
-			loadFeed(0, done);
+			loadFeed(0, function() {
+				done();
+			});
 		});
 
-		it('loadFeed function is called, completes its work and there is at least a single ".entry" element within the feed container', function(done) {
+		it('loadFeed function is called, completes its work and there is at least a single ".entry" element within the feed container', function() {
 			var feedEntry = document.querySelectorAll('.feed .entry');
 
 			expect(feedEntry.length).toBeGreaterThan(0);
-			done();
 		});
 
 	});
