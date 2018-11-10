@@ -34,7 +34,7 @@ $(function() {
 		it('it has to be a URL defined', function() {
 			allFeeds.forEach(function(feedItem) {
 				expect(feedItem.url).toBeTruthy();
-			})
+			});
 		});
 
 
@@ -45,7 +45,7 @@ $(function() {
 		it('it has to be a NAME defined', function() {
 			allFeeds.forEach(function(feedItem) {
 				expect(feedItem.name).toBeTruthy();
-			})
+			});
 		});
 	});
 
